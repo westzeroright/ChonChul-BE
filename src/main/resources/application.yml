@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ChonChul-BE
+
+  profiles:
+    group:
+      local:
+        - mysql
+    active: local
