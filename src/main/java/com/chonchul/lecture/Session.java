@@ -1,5 +1,6 @@
-package com.chonchul;
+package com.chonchul.lecture;
 
+import com.chonchul.attend.Attend;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

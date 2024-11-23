@@ -1,38 +1,31 @@
-package com.chonchul;
+package com.chonchul.lecture;
 
+import com.chonchul.attend.StudentLecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-public class Student {
+public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int number;
-
     private String name;
 
-    private String department;
+    private String code;
 
-    private String phoneNumber;
+    private String place;
 
-    private String email;
-
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "lecture")
     private List<StudentLecture> studentLectures = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "student_id")
-    private List<Attend> attends = new ArrayList<>();
+    @JoinColumn(name = "lecture_id")
+    private List<Session> sessions = new ArrayList<>();
 }

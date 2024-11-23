@@ -1,5 +1,6 @@
-package com.chonchul;
+package com.chonchul.user;
 
+import com.chonchul.lecture.Lecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,21 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Lecture {
+public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int number;
+
     private String name;
 
-    private String code;
+    private String department;
 
-    private String place;
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "lecture")
-    private List<StudentLecture> studentLectures = new ArrayList<>();
+    private String email;
 
     @OneToMany
-    @JoinColumn(name = "lecture_id")
-    private List<Session> sessions = new ArrayList<>();
+    @JoinColumn(name = "teacher_id")
+    private List<Lecture> lectures = new ArrayList<>();
 }

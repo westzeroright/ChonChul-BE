@@ -1,5 +1,7 @@
-package com.chonchul;
+package com.chonchul.user;
 
+import com.chonchul.attend.Attend;
+import com.chonchul.attend.StudentLecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Teacher {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +27,10 @@ public class Teacher {
 
     private String email;
 
+    @OneToMany(mappedBy = "student")
+    private List<StudentLecture> studentLectures = new ArrayList<>();
+
     @OneToMany
-    @JoinColumn(name = "teacher_id")
-    private List<Lecture> lectures = new ArrayList<>();
+    @JoinColumn(name = "student_id")
+    private List<Attend> attends = new ArrayList<>();
 }
