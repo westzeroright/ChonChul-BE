@@ -19,3 +19,8 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     generate-ddl: false
     open-in-view: false
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
