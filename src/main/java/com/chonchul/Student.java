@@ -29,10 +29,6 @@ public class Student {
 
     private String email;
 
-    @OneToMany
-    @JoinColumn(name = "student_id")
-    private List<Device> devices = new ArrayList<>();
-
     @OneToMany(mappedBy = "student")
     private List<StudentLecture> studentLectures = new ArrayList<>();
 
