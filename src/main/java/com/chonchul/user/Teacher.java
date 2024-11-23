@@ -1,5 +1,6 @@
-package com.chonchul;
+package com.chonchul.user;
 
+import com.chonchul.lecture.Lecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

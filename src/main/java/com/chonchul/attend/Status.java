@@ -1,4 +1,4 @@
-package com.chonchul;
+package com.chonchul.attend;
 
 public enum Status {
     ATTEND("출석"),

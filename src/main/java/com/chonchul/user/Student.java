@@ -1,17 +1,15 @@
-package com.chonchul;
+package com.chonchul.user;
 
+import com.chonchul.attend.Attend;
+import com.chonchul.attend.StudentLecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Student {
@@ -28,10 +26,6 @@ public class Student {
     private String phoneNumber;
 
     private String email;
-
-    @OneToMany
-    @JoinColumn(name = "student_id")
-    private List<Device> devices = new ArrayList<>();
 
     @OneToMany(mappedBy = "student")
     private List<StudentLecture> studentLectures = new ArrayList<>();
