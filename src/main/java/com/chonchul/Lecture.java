@@ -17,7 +17,7 @@ public class Lecture {
 
     private String name;
 
-    private int code;
+    private String code;
 
     private String place;
 
