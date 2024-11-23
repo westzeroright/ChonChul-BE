@@ -17,7 +17,7 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String week;
+    private int week;
 
     private LocalDate date;
 
