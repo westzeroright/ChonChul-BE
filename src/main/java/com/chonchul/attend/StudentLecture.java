@@ -1,5 +1,6 @@
 package com.chonchul.attend;
 
+import com.chonchul.common.persistence.BaseEntity;
 import com.chonchul.lecture.Lecture;
 import com.chonchul.user.Student;
 import jakarta.persistence.Entity;
@@ -10,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class StudentLecture {
+public class StudentLecture extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
