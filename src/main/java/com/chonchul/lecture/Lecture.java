@@ -1,6 +1,7 @@
 package com.chonchul.lecture;
 
 import com.chonchul.attend.StudentLecture;
+import com.chonchul.common.persistence.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Lecture {
+public class Lecture extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

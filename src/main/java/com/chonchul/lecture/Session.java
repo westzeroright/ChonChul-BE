@@ -1,6 +1,7 @@
 package com.chonchul.lecture;
 
 import com.chonchul.attend.Attend;
+import com.chonchul.common.persistence.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Session {
+public class Session extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
