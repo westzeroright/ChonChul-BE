@@ -1,4 +1,4 @@
-package com.chonchul.common;
+package com.chonchul.common.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
