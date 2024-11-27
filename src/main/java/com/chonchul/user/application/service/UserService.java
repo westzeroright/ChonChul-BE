@@ -1,5 +1,6 @@
 package com.chonchul.user.application.service;
 
+import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
 import com.chonchul.user.persistence.entity.User;
@@ -13,8 +14,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void findUser(Long userId) {
+    public UserInfoDto findUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(()->new NotFoundUserException());
+                .orElseThrow(() -> new NotFoundUserException());
+        return new UserInfoDto(
+                user.getName(),
+                user.getNumber(),
+                user.getDepartment(),
+                user.getPhoneNumber(),
+                user.getEmail());
     }
 }

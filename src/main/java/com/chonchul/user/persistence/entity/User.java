@@ -12,14 +12,14 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User extends BaseEntity {
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int number;
-
     private String name;
+
+    private int number;
 
     private String department;
 
@@ -29,4 +29,26 @@ public abstract class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    protected User() {}
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
