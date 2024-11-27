@@ -1,4 +1,4 @@
-package com.chonchul.user;
+package com.chonchul.user.persistence.entity;
 
 import com.chonchul.common.persistence.BaseEntity;
 import jakarta.persistence.Entity;
