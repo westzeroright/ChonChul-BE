@@ -5,6 +5,7 @@ import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
 import com.chonchul.user.persistence.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -14,6 +15,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional(readOnly = true)
     public UserInfoDto findUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserException());
@@ -25,10 +27,18 @@ public class UserService {
                 user.getEmail());
     }
 
+    @Transactional
     public void modifyUser(Long userId, UserInfoDto userInfoDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserException());
         user.update(userInfoDto.name(), userInfoDto.number(), userInfoDto.department(), userInfoDto.phoneNumber(), userInfoDto.email());
         userRepository.saveAndFlush(user);
+    }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserException());
+        userRepository.delete(user);
     }
 }

@@ -1,6 +1,7 @@
 package com.chonchul.user.persistence.entity;
 
 import com.chonchul.lecture.Lecture;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -11,7 +12,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("TEACHER")
 public class Teacher extends User {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "teacher_id")
     private List<Lecture> lectures = new ArrayList<>();
 }
