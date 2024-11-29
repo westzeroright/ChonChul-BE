@@ -56,4 +56,12 @@ public abstract class User extends BaseEntity{
     public String getEmail() {
         return email;
     }
+
+    public void update(String name, int number, String department, String phoneNumber, String email) {
+        this.name = name;
+        this.number = number;
+        this.department = department;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
 }

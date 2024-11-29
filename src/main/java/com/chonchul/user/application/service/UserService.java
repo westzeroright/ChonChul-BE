@@ -24,4 +24,11 @@ public class UserService {
                 user.getPhoneNumber(),
                 user.getEmail());
     }
+
+    public void modifyUser(Long userId, UserInfoDto userInfoDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundUserException());
+        user.update(userInfoDto.name(), userInfoDto.number(), userInfoDto.department(), userInfoDto.phoneNumber(), userInfoDto.email());
+        userRepository.saveAndFlush(user);
+    }
 }
