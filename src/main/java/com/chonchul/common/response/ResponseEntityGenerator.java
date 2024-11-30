@@ -26,4 +26,8 @@ public class ResponseEntityGenerator {
         return new ResponseEntity<>(
                 new FailureBody(code, message), status);
     }
+
+    public static ResponseEntity<FailureBody> fail(String message, HttpStatus status) {
+        return fail(null,message,status);
+    }
 }
