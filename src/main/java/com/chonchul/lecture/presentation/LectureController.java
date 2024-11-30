@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/lecture")
+@RequestMapping("/api/v1/lectures")
 public class LectureController {
 
     private final LectureService lectureService;
@@ -34,13 +34,13 @@ public class LectureController {
         return ResponseEntityGenerator.success(lectures, "수업 목록 조회 성공", HttpStatus.OK);
     }
 
-    @GetMapping("/info/{lectureId}")
+    @GetMapping("/infos/{lectureId}")
     public ResponseEntity<SuccessBody<LectureInfoDto>> getLectureInfo(@PathVariable Long lectureId) {
         LectureInfoDto lectureInfoDto =  lectureService.getLectureInfo(lectureId);
         return ResponseEntityGenerator.success(lectureInfoDto, "수업 목록 조회 성공", HttpStatus.OK);
     }
 
-    @GetMapping("/session")
+    @GetMapping("/sessions")
     public ResponseEntity<SuccessBody<SessionInfoDto>> getLectureSession(@RequestParam LocalDate localDate, @RequestParam Long lectureId) {
         SessionInfoDto sessionInfoDto = sessionService.getLectureSession(localDate, lectureId);
         return ResponseEntityGenerator.success(sessionInfoDto,"강의주차 조회 성공", HttpStatus.OK);
