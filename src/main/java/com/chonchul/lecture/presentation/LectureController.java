@@ -1,7 +1,7 @@
 package com.chonchul.lecture.presentation;
 
-import com.chonchul.lecture.application.LectureService;
-import com.chonchul.lecture.dto.LectureInfoDto;
+import com.chonchul.lecture.application.service.LectureService;
+import com.chonchul.lecture.application.dto.LectureInfoDto;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,5 +21,10 @@ public class LectureController {
     @GetMapping("/{studentId}")
     public List<LectureInfoDto> getLectures(@PathVariable Long studentId) {
         return lectureService.getLectures(studentId);
+    }
+
+    @GetMapping("/info/{lectureId}")
+    public LectureInfoDto getLectureInfo(@PathVariable Long lectureId) {
+        return lectureService.getLectureInfo(lectureId);
     }
 }

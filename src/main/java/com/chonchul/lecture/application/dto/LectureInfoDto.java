@@ -1,4 +1,4 @@
-package com.chonchul.lecture.dto;
+package com.chonchul.lecture.application.dto;
 
 public record LectureInfoDto(
         String lectureName,

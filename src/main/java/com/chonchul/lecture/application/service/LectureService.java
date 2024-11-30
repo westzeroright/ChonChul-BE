@@ -1,6 +1,7 @@
-package com.chonchul.lecture.application;
+package com.chonchul.lecture.application.service;
 
-import com.chonchul.lecture.dto.LectureInfoDto;
+import com.chonchul.lecture.application.dto.LectureInfoDto;
+import com.chonchul.lecture.application.exception.NotFoundLecture;
 import com.chonchul.lecture.persistence.LectureRepository;
 import com.chonchul.lecture.persistence.StudentLectureRepository;
 import com.chonchul.lecture.persistence.entity.Lecture;
@@ -31,5 +32,17 @@ public class LectureService {
                         lecture.getPlace()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public LectureInfoDto getLectureInfo(Long lectureId) {
+        Lecture lecture = lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new NotFoundLecture());
+        return new LectureInfoDto(
+                lecture.getName(),
+                lecture.getTeacher().getName(),
+                lecture.getCode(),
+                lecture.getTime(),
+                lecture.getPlace()
+        );
     }
 }
