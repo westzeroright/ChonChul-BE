@@ -1,6 +1,6 @@
 package com.chonchul.user.persistence.entity;
 
-import com.chonchul.lecture.Lecture;
+import com.chonchul.lecture.persistence.entity.Lecture;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
