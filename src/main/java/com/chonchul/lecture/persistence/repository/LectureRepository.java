@@ -1,4 +1,4 @@
-package com.chonchul.lecture.persistence;
+package com.chonchul.lecture.persistence.repository;
 
 import com.chonchul.lecture.persistence.entity.Lecture;
 import java.util.List;

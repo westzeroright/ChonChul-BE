@@ -2,8 +2,8 @@ package com.chonchul.lecture.application.service;
 
 import com.chonchul.lecture.application.dto.LectureInfoDto;
 import com.chonchul.lecture.application.exception.NotFoundLecture;
-import com.chonchul.lecture.persistence.LectureRepository;
-import com.chonchul.lecture.persistence.StudentLectureRepository;
+import com.chonchul.lecture.persistence.repository.LectureRepository;
+import com.chonchul.lecture.persistence.repository.StudentLectureRepository;
 import com.chonchul.lecture.persistence.entity.Lecture;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class LectureService {
     }
 
     public List<LectureInfoDto> getLectures(Long studentId) {
-        List<Long> lectureId =  studentLectureRepository.findLectureIdByStudentId(studentId);
+        List<Long> lectureId = studentLectureRepository.findLectureIdByStudentId(studentId);
         List<Lecture> lectures = lectureRepository.findByIdIn(lectureId);
         return lectures.stream()
                 .map(lecture -> new LectureInfoDto(
