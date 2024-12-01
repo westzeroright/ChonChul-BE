@@ -28,7 +28,6 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<SuccessBody<UserInfoDto>> getUser(@PathVariable Long userId, Model model) {
         UserInfoDto userInfoDto = userService.findUser(userId);
-        model.addAttribute("hello", "서버에서 보내준 값입니다");
         return ResponseEntityGenerator.success(userInfoDto, "회원 조회 성공", HttpStatus.OK);
     }
 
