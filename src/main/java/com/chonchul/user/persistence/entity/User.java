@@ -13,7 +13,7 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User extends BaseEntity{
+public abstract class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +35,12 @@ public abstract class User extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    protected User() {}
+    protected User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -58,6 +63,14 @@ public abstract class User extends BaseEntity{
     }
 
     public void update(String name, int number, String department, String phoneNumber, String email) {
+        this.name = name;
+        this.number = number;
+        this.department = department;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    protected User(String name, int number, String department, String phoneNumber, String email) {
         this.name = name;
         this.number = number;
         this.department = department;
