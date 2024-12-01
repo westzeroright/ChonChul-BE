@@ -7,14 +7,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
     private final JavaMailSender javaMailSender;
     private static int code;
     private static final String senderEmail = "westzeroright@gmail.com";
+    private final RedisUtil redisUtil;
 
-    public EmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
 
     public static void createCode(){
         code = (int)(Math.random() * (90000)) + 100000;// (int) Math.random() * (최댓값-최소값+1) + 최소값
@@ -40,10 +39,22 @@ public class EmailService {
         return message;
     }
 
-
     public int sendMail(String email) {
         MimeMessage message = createForm(email);
         javaMailSender.send(message);
+        redisUtil.setDataExpire(Integer.toString(code),email,60*1L);
         return code;
+    }
+
+    public boolean checkAuthCode(String email, String code) {
+        if(redisUtil.getData(code)==null){
+            return false;
+        }
+        else if(redisUtil.getData(code).equals(email)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
