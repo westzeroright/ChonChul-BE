@@ -17,6 +17,7 @@ public class EmailController {
 
     @PostMapping("/send")
     public String senEmail(@RequestParam String email) {
+        emailService.isValidEmail(email);
         int code = emailService.sendMail(email);
         String numberCode = "" + code;
         return numberCode;
