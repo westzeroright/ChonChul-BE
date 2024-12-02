@@ -1,5 +1,6 @@
 package com.chonchul.user.presentation;
 
+import com.chonchul.auth.LoginUser;
 import com.chonchul.auth.dto.LoginReqDto;
 import com.chonchul.auth.dto.SignUpReqDto;
 import com.chonchul.common.response.ResponseEntityGenerator;
@@ -7,6 +8,7 @@ import com.chonchul.common.response.SuccessBody;
 import com.chonchul.auth.token.AuthTokenDto;
 import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.service.UserService;
+import com.chonchul.user.persistence.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<SuccessBody<UserInfoDto>> getUser(@PathVariable Long userId) {
-        UserInfoDto userInfoDto = userService.findUser(userId);
+    @GetMapping
+    public ResponseEntity<SuccessBody<UserInfoDto>> getUser(@LoginUser User user) {
+        UserInfoDto userInfoDto = userService.findUser(user.getId());
         return ResponseEntityGenerator.success(userInfoDto, "회원 조회 성공", HttpStatus.OK);
     }
 

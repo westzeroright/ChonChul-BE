@@ -1,4 +1,4 @@
-package com.chonchul.token;
+package com.chonchul.auth.token;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthTokenService {
-    private final JwtUtil jwtUtil;
+    private final TokenProvider jwtUtil;
 
     public AuthTokenDto createAuthToken(Long userId) {
         String accessToken = jwtUtil.createAccessToken(userId);

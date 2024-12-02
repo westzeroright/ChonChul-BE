@@ -1,4 +1,4 @@
-package com.chonchul.token;
+package com.chonchul.auth.token;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtUtil {
+public class TokenProvider {
     private static final String USER_ID_CLAIM_KEY = "userId";
     private final SecretKey accessSecretKey;
     private final SecretKey refreshSecretKey;
     private final Long accessTokenExpireTime;
     private final Long refreshTokenExpireTime;
 
-    public JwtUtil(
+    public TokenProvider(
             @Value("${jwt.access.secretKey}") String accessSecretKey,
             @Value("${jwt.refresh.secretKey}") String refreshSecretKey,
             @Value("${jwt.access.expireTime}") Long accessTokenExpireTime,
