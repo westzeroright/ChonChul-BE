@@ -1,8 +1,8 @@
 package com.chonchul.user.application.service;
 
 import com.chonchul.email.EmailService;
-import com.chonchul.token.AuthTokenDto;
-import com.chonchul.token.AuthTokenService;
+import com.chonchul.auth.token.AuthTokenDto;
+import com.chonchul.auth.token.AuthTokenService;
 import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
@@ -47,9 +47,9 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User createStudent(String name, int number, String department, String phoneNumber, String email) {
+    public User createStudent(String name, int number, String department, String phoneNumber, String email, String password) {
         if (!emailService.isVerified(email)) {
-            Student student = new Student(name, number, department, phoneNumber, email);
+            Student student = new Student(name, number, department, phoneNumber, email, password);
             User user = (User) student;
             userRepository.saveAndFlush(user);
             return user;
@@ -57,8 +57,14 @@ public class UserService {
         return null;
     }
 
-    public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email) {
-        User user = createStudent(name,number,department,phoneNumber,email);
+    public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email, String password) {
+        User user = createStudent(name,number,department,phoneNumber,email, password);
         return authTokenService.createAuthToken(user.getId());
+    }
+
+    public AuthTokenDto login(String email, String password) {
+        User existUser = userRepository.findByEmailAndPassword(email,password)
+                .orElseThrow(() -> new NotFoundUserException());
+        return authTokenService.createAuthToken(existUser.getId());
     }
 }

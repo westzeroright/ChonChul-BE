@@ -1,8 +1,10 @@
 package com.chonchul.user.presentation;
 
+import com.chonchul.auth.dto.LoginReqDto;
+import com.chonchul.auth.dto.SignUpReqDto;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
-import com.chonchul.token.AuthTokenDto;
+import com.chonchul.auth.token.AuthTokenDto;
 import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.service.UserService;
 import jakarta.validation.Valid;
@@ -46,8 +48,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SuccessBody<AuthTokenDto>> createUser(@RequestBody UserInfoDto userInfoDto) {
-        AuthTokenDto authTokenDto = userService.signup(userInfoDto.name(),userInfoDto.number(),userInfoDto.department(),userInfoDto.phoneNumber(),userInfoDto.email());
-        return ResponseEntityGenerator.success(authTokenDto, "회원 추가 성공", HttpStatus.OK);
+    public ResponseEntity<SuccessBody<AuthTokenDto>> signup(@Valid @RequestBody SignUpReqDto signUpReqDto) {
+        AuthTokenDto authTokenDto = userService.signup(signUpReqDto.name(),signUpReqDto.number(),signUpReqDto.department(),signUpReqDto.phoneNumber(),signUpReqDto.email(),signUpReqDto.password());
+        return ResponseEntityGenerator.success(authTokenDto, "회원 가입 성공", HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<SuccessBody<AuthTokenDto>> login(@Valid @RequestBody LoginReqDto loginReqDto) {
+        AuthTokenDto authTokenDto = userService.login(loginReqDto.email(), loginReqDto.password());
+        return ResponseEntityGenerator.success(authTokenDto, "회원 로그인 성공", HttpStatus.OK);
     }
 }

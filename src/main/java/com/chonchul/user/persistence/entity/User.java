@@ -32,6 +32,9 @@ public abstract class User extends BaseEntity {
     @Column(nullable = true)
     private String email;
 
+    @Column(nullable = true)
+    private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -70,11 +73,12 @@ public abstract class User extends BaseEntity {
         this.email = email;
     }
 
-    protected User(String name, int number, String department, String phoneNumber, String email) {
+    protected User(String name, int number, String department, String phoneNumber, String email, String password) {
         this.name = name;
         this.number = number;
         this.department = department;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.password = password;
     }
 }

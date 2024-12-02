@@ -22,7 +22,7 @@ public class Student extends User {
 
     protected Student() {}
 
-    public Student(String name, int number, String department, String phoneNumber, String email) {
-        super(name,number,department,phoneNumber,email);
+    public Student(String name, int number, String department, String phoneNumber, String email, String password) {
+        super(name,number,department,phoneNumber,email,password);
     }
 }
