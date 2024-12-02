@@ -36,16 +36,16 @@ public class UserController {
         return ResponseEntityGenerator.success(userInfoDto, "회원 조회 성공", HttpStatus.OK);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<SuccessBody<Void>> updateUser(@PathVariable Long userId,
+    @PutMapping
+    public ResponseEntity<SuccessBody<Void>> updateUser(@LoginUser User user,
                                                         @Valid @RequestBody UserInfoDto userInfoDto) {
-        userService.modifyUser(userId, userInfoDto);
+        userService.modifyUser(user.getId(), userInfoDto);
         return ResponseEntityGenerator.success(null, "회원 수정 성공", HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<SuccessBody<Void>> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
+    @DeleteMapping
+    public ResponseEntity<SuccessBody<Void>> deleteUser(@LoginUser User user) {
+        userService.deleteUser(user.getId());
         return ResponseEntityGenerator.success(null, "회원 삭제 성공", HttpStatus.OK);
     }
 
