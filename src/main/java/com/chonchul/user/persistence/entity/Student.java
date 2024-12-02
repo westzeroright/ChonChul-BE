@@ -19,4 +19,10 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "student_id")
     private List<Attend> attends = new ArrayList<>();
+
+    protected Student() {}
+
+    public Student(String name, int number, String department, String phoneNumber, String email, String password) {
+        super(name,number,department,phoneNumber,email,password);
+    }
 }

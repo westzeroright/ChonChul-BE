@@ -43,6 +43,7 @@ public class EmailService {
         MimeMessage message = createForm(email);
         javaMailSender.send(message);
         redisUtil.setDataExpire(Integer.toString(code),email,60*1L);
+        redisUtil.setData(email,EmailStatus.PENDING);
         return code;
     }
 
@@ -51,10 +52,25 @@ public class EmailService {
             return false;
         }
         else if(redisUtil.getData(code).equals(email)){
+            redisUtil.setData(email, EmailStatus.VERIFIED);
             return true;
         }
         else{
             return false;
         }
+    }
+
+    public boolean isVerified(String email) {
+        Object status = redisUtil.getData(email);
+        return EmailStatus.VERIFIED.equals(status);
+    }
+
+    public boolean isValidEmail(String email) {
+        String regex = "^[a-zA-Z0-9._%+-]+@jnu\\.ac\\.kr$";
+        boolean isValid = email.matches(regex);
+        if (!isValid) {
+            throw new RuntimeException();
+        }
+        return true;
     }
 }
