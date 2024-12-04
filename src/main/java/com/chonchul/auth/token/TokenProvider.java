@@ -16,16 +16,24 @@ public class TokenProvider {
     private final Long accessTokenExpireTime;
     private final Long refreshTokenExpireTime;
 
+    private static final String LECTURE_ID_CLAIM_KEY = "lectureId";
+    private final SecretKey qrSecretKey;
+    private final Long qrTokenExpireTime;
+
     public TokenProvider(
             @Value("${jwt.access.secretKey}") String accessSecretKey,
             @Value("${jwt.refresh.secretKey}") String refreshSecretKey,
             @Value("${jwt.access.expireTime}") Long accessTokenExpireTime,
-            @Value("${jwt.refresh.expireTime}") Long refreshTokenExpireTime
+            @Value("${jwt.refresh.expireTime}") Long refreshTokenExpireTime,
+            @Value("${jwt.qr.secretKey}") String qrSecretKey,
+            @Value("{jwt.qr.expireTime}") Long qrTokenExpireTime
     ) {
         this.accessSecretKey = Keys.hmacShaKeyFor(accessSecretKey.getBytes());
         this.refreshSecretKey = Keys.hmacShaKeyFor(refreshSecretKey.getBytes());
         this.accessTokenExpireTime = accessTokenExpireTime;
         this.refreshTokenExpireTime = refreshTokenExpireTime;
+        this.qrSecretKey = Keys.hmacShaKeyFor(qrSecretKey.getBytes());
+        this.qrTokenExpireTime = qrTokenExpireTime;
     }
 
     public String createAccessToken(final Long userId) {
@@ -49,6 +57,18 @@ public class TokenProvider {
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + refreshTokenExpireTime))
                 .signWith(refreshSecretKey)
+                .compact();
+    }
+
+    public String createQrToken(final Long lectureId) {
+        final Date now = new Date();
+
+        return Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+                .claim(LECTURE_ID_CLAIM_KEY, lectureId)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + qrTokenExpireTime))
+                .signWith(qrSecretKey)
                 .compact();
     }
 }
