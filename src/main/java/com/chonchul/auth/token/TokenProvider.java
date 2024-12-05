@@ -26,7 +26,7 @@ public class TokenProvider {
             @Value("${jwt.access.expireTime}") Long accessTokenExpireTime,
             @Value("${jwt.refresh.expireTime}") Long refreshTokenExpireTime,
             @Value("${jwt.qr.secretKey}") String qrSecretKey,
-            @Value("{jwt.qr.expireTime}") Long qrTokenExpireTime
+            @Value("${jwt.qr.expireTime}") Long qrTokenExpireTime
     ) {
         this.accessSecretKey = Keys.hmacShaKeyFor(accessSecretKey.getBytes());
         this.refreshSecretKey = Keys.hmacShaKeyFor(refreshSecretKey.getBytes());
