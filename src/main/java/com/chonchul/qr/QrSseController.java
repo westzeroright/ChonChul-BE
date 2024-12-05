@@ -6,6 +6,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 import java.util.Map;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequestMapping("/api/v1/sse")
+@Tag(name = "큐알 API", description = "큐알 생성 관련 API")
 public class QrSseController {
 
     private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
@@ -42,6 +45,7 @@ public class QrSseController {
         }, 0, 10, TimeUnit.SECONDS);
     }
 
+    @Operation(summary = "큐알 생성 및 갱신", description = "큐알을 10초마다 생성합니다.")
     @GetMapping(value = "/connect/{lectureId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter connect(@PathVariable Long lectureId) {
         SseEmitter emitter = new SseEmitter(0L);
@@ -95,6 +99,7 @@ public class QrSseController {
         return null;
     }
 
+    @Operation(summary = "큐알 생성 종료", description = "큐알 생성을 종료합니다.")
     @PostMapping("/cancel")
     public void cancel() {
         for (SseEmitter emitter : emitters) {
