@@ -1,4 +1,4 @@
-package com.chonchul.attend;
+package com.chonchul.attend.persistence.entity;
 
 import com.chonchul.common.persistence.BaseEntity;
 import com.chonchul.lecture.persistence.entity.Session;
@@ -28,4 +28,13 @@ public class Attend extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
+    protected Attend() {}
+
+    public Attend(LocalDateTime time, Status status, Session session, Student student) {
+        this.time = time;
+        this.status = status;
+        this.session = session;
+        this.student = student;
+    }
 }

@@ -3,9 +3,9 @@ package com.chonchul.user.presentation;
 import com.chonchul.auth.LoginUser;
 import com.chonchul.auth.dto.LoginReqDto;
 import com.chonchul.auth.dto.SignUpReqDto;
+import com.chonchul.auth.token.AuthTokenDto;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
-import com.chonchul.auth.token.AuthTokenDto;
 import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.service.UserService;
 import com.chonchul.user.persistence.entity.User;
@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +50,8 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<SuccessBody<AuthTokenDto>> signup(@Valid @RequestBody SignUpReqDto signUpReqDto) {
-        AuthTokenDto authTokenDto = userService.signup(signUpReqDto.name(),signUpReqDto.number(),signUpReqDto.department(),signUpReqDto.phoneNumber(),signUpReqDto.email(),signUpReqDto.password());
+        AuthTokenDto authTokenDto = userService.signup(signUpReqDto.name(), signUpReqDto.number(),
+                signUpReqDto.department(), signUpReqDto.phoneNumber(), signUpReqDto.email(), signUpReqDto.password());
         return ResponseEntityGenerator.success(authTokenDto, "회원 가입 성공", HttpStatus.OK);
     }
 

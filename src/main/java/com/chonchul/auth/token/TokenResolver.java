@@ -12,15 +12,19 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class TokenResolver {
     private static final String USER_ID_CLAIM_KEY = "userId";
+    private static final String LECTURE_ID_CLAIM_KEY = "lectureId";
     private final SecretKey accessSecretKey;
     private final SecretKey refreshSecretKey;
+    private final SecretKey qrSecretKey;
 
     public TokenResolver(
             @Value("${jwt.access.secretKey}") String accessSecretKey,
-            @Value("${jwt.refresh.secretKey}") String refreshSecretKey
+            @Value("${jwt.refresh.secretKey}") String refreshSecretKey,
+            @Value("${jwt.qr.secretKey}") String qrSecretKey
     ) {
         this.accessSecretKey = Keys.hmacShaKeyFor(accessSecretKey.getBytes());
         this.refreshSecretKey = Keys.hmacShaKeyFor(refreshSecretKey.getBytes());
+        this.qrSecretKey = Keys.hmacShaKeyFor(qrSecretKey.getBytes());
     }
 
     private Claims getAccessClaims(final String token) {
@@ -31,6 +35,10 @@ public class TokenResolver {
         return parseClaims(token, refreshSecretKey);
     }
 
+    private Claims getQrClaims(final String token) {
+        return parseClaims(token, qrSecretKey);
+    }
+
     private Long getClaimValue(Claims claims, String claimKey) {
         return claims.get(claimKey, Long.class);
     }
@@ -39,19 +47,22 @@ public class TokenResolver {
         return getClaimValue(getAccessClaims(token), USER_ID_CLAIM_KEY);
     }
 
-//    private Claims parseClaims(final String token, final SecretKey secretKey) {
-//        try {
-//            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
-//        } catch (ExpiredJwtException e) {
-//            throw new TokenParsingException();
-//        } catch (SignatureException e) {
-//            throw new TokenParsingException();
-//        } catch (Exception e) {
-//            throw new TokenParsingException();
-//        }
-//    }
-    private Claims parseClaims(final String token, final SecretKey secretKey) {
-        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+    public Long getLectureDataByQrToken(final String token) {
+        return getClaimValue(getQrClaims(token),LECTURE_ID_CLAIM_KEY);
     }
+
+    private Claims parseClaims(final String token, final SecretKey secretKey) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            throw new TokenParsingException();
+        } catch (SignatureException e) {
+            throw new TokenParsingException();
+        } catch (Exception e) {
+            throw new TokenParsingException();
+        }
+    }
+
+
 
 }
