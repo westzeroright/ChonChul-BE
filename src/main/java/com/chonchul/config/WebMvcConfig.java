@@ -32,23 +32,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry
-                .addInterceptor(jwtInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        // Auth 관련 경로
-//                        "/lecute",
-
-                        // Swagger UI 관련 경로
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-resources/**",
-                        "/webjars/**",
-                        "/swagger/**",
-                        "/favicon.ico",
-                        "/error");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry
+//                .addInterceptor(jwtInterceptor)
+////                .addPathPatterns("/**")
+//                .excludePathPatterns(
+//                        // Auth 관련 경로
+////                        "/lecute",
+//
+//                        // Swagger UI 관련 경로
+//                        "/swagger-ui.html",
+//                        "/swagger-ui/**",
+//                        "/v3/api-docs/**",
+//                        "/swagger-resources/**",
+//                        "/webjars/**",
+//                        "/swagger/**",
+//                        "/favicon.ico",
+//                        "/error");
+//    }
 }
