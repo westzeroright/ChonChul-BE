@@ -36,4 +36,8 @@ public class AuthService {
         }
         return null;
     }
+
+    public AuthTokenDto reissue(String refreshToken) {
+        return authTokenService.reissue(refreshToken);
+    }
 }

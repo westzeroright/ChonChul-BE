@@ -44,6 +44,10 @@ public class TokenResolver {
         return claims.get(claimKey, Long.class);
     }
 
+    public Long getUserDataByRefreshToken(final String token) {
+        return getClaimValue(getRefreshClaims(token), USER_ID_CLAIM_KEY);
+    }
+
     public Long getUserDataByAccessToken(final String token) {
         return getClaimValue(getAccessClaims(token), USER_ID_CLAIM_KEY);
     }
@@ -63,7 +67,4 @@ public class TokenResolver {
             throw new TokenParsingException();
         }
     }
-
-
-
 }

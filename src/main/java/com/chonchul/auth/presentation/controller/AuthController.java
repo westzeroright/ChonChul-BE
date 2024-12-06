@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +40,11 @@ public class AuthController {
     public ResponseEntity<SuccessBody<AuthTokenDto>> login(@Valid @RequestBody LoginReqDto loginReqDto) {
         AuthTokenDto authTokenDto = authService.login(loginReqDto.email(), loginReqDto.password());
         return ResponseEntityGenerator.success(authTokenDto, "회원 로그인 성공", HttpStatus.OK);
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<SuccessBody<AuthTokenDto>> reissue(@RequestHeader String refreshToken) {
+        AuthTokenDto authTokenDto = authService.reissue(refreshToken);
+        return ResponseEntityGenerator.success(authTokenDto, "토큰 재발급 성공", HttpStatus.OK);
     }
 }
