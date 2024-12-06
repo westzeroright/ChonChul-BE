@@ -1,11 +1,13 @@
 package com.chonchul.auth.application.service;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
+import com.chonchul.auth.application.exception.InvalidLoginException;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
 import com.chonchul.user.persistence.entity.Student;
 import com.chonchul.user.persistence.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,14 +24,20 @@ public class AuthService {
     }
 
     public AuthTokenDto login(String email, String password) {
-        User existUser = userRepository.findByEmailAndPassword(email,password)
+        User existUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundUserException());
+        boolean checkPassword = authenticateUser(password,existUser.getPassword());
+        if (!checkPassword) {
+            throw new InvalidLoginException();
+        }
+
         return authTokenService.createAuthToken(existUser.getId());
     }
 
     public User createStudent(String name, int number, String department, String phoneNumber, String email, String password) {
         if (!emailService.isVerified(email)) {
-            Student student = new Student(name, number, department, phoneNumber, email, password);
+            String hashedPassword = hashPassword(password);
+            Student student = new Student(name, number, department, phoneNumber, email, hashedPassword);
             User user = (User) student;
             userRepository.saveAndFlush(user);
             return user;
@@ -39,5 +47,13 @@ public class AuthService {
 
     public AuthTokenDto reissue(String refreshToken) {
         return authTokenService.reissue(refreshToken);
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public boolean authenticateUser(String inputPassword, String storedHashedPassword) {
+        return BCrypt.checkpw(inputPassword, storedHashedPassword);
     }
 }
