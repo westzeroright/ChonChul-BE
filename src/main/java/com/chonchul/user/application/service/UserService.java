@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final EmailService emailService;
-    private final AuthTokenService authTokenService;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Transactional(readOnly = true)
     public UserInfoDto findUser(Long userId) {
@@ -45,26 +46,5 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundUserException());
         userRepository.delete(user);
-    }
-
-    public User createStudent(String name, int number, String department, String phoneNumber, String email, String password) {
-        if (!emailService.isVerified(email)) {
-            Student student = new Student(name, number, department, phoneNumber, email, password);
-            User user = (User) student;
-            userRepository.saveAndFlush(user);
-            return user;
-        }
-        return null;
-    }
-
-    public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email, String password) {
-        User user = createStudent(name,number,department,phoneNumber,email, password);
-        return authTokenService.createAuthToken(user.getId());
-    }
-
-    public AuthTokenDto login(String email, String password) {
-        User existUser = userRepository.findByEmailAndPassword(email,password)
-                .orElseThrow(() -> new NotFoundUserException());
-        return authTokenService.createAuthToken(existUser.getId());
     }
 }

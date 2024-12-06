@@ -53,17 +53,4 @@ public class UserController {
         userService.deleteUser(user.getId());
         return ResponseEntityGenerator.success(null, "회원 삭제 성공", HttpStatus.OK);
     }
-
-    @PostMapping("/signup")
-    public ResponseEntity<SuccessBody<AuthTokenDto>> signup(@Valid @RequestBody SignUpReqDto signUpReqDto) {
-        AuthTokenDto authTokenDto = userService.signup(signUpReqDto.name(), signUpReqDto.number(),
-                signUpReqDto.department(), signUpReqDto.phoneNumber(), signUpReqDto.email(), signUpReqDto.password());
-        return ResponseEntityGenerator.success(authTokenDto, "회원 가입 성공", HttpStatus.OK);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<SuccessBody<AuthTokenDto>> login(@Valid @RequestBody LoginReqDto loginReqDto) {
-        AuthTokenDto authTokenDto = userService.login(loginReqDto.email(), loginReqDto.password());
-        return ResponseEntityGenerator.success(authTokenDto, "회원 로그인 성공", HttpStatus.OK);
-    }
 }
