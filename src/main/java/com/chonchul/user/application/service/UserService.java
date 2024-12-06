@@ -1,14 +1,9 @@
 package com.chonchul.user.application.service;
 
-import com.chonchul.email.EmailService;
-import com.chonchul.auth.token.AuthTokenDto;
-import com.chonchul.auth.token.AuthTokenService;
 import com.chonchul.user.application.dto.UserInfoDto;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
-import com.chonchul.user.persistence.entity.Student;
 import com.chonchul.user.persistence.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,15 +25,6 @@ public class UserService {
                 user.getDepartment(),
                 user.getPhoneNumber(),
                 user.getEmail());
-    }
-
-    @Transactional
-    public void modifyUser(Long userId, UserInfoDto userInfoDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundUserException());
-        user.update(userInfoDto.name(), userInfoDto.number(), userInfoDto.department(), userInfoDto.phoneNumber(),
-                userInfoDto.email());
-        userRepository.saveAndFlush(user);
     }
 
     @Transactional

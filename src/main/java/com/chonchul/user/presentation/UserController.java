@@ -1,9 +1,6 @@
 package com.chonchul.user.presentation;
 
 import com.chonchul.auth.LoginUser;
-import com.chonchul.auth.dto.LoginReqDto;
-import com.chonchul.auth.dto.SignUpReqDto;
-import com.chonchul.auth.token.AuthTokenDto;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
 import com.chonchul.user.application.dto.UserInfoDto;
@@ -11,14 +8,10 @@ import com.chonchul.user.application.service.UserService;
 import com.chonchul.user.persistence.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,14 +30,6 @@ public class UserController {
     public ResponseEntity<SuccessBody<UserInfoDto>> getUser(@LoginUser User user) {
         UserInfoDto userInfoDto = userService.findUser(user.getId());
         return ResponseEntityGenerator.success(userInfoDto, "회원 조회 성공", HttpStatus.OK);
-    }
-
-    @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
-    @PutMapping
-    public ResponseEntity<SuccessBody<Void>> updateUser(@LoginUser User user,
-                                                        @Valid @RequestBody UserInfoDto userInfoDto) {
-        userService.modifyUser(user.getId(), userInfoDto);
-        return ResponseEntityGenerator.success(null, "회원 수정 성공", HttpStatus.OK);
     }
 
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 수행합니다.")
