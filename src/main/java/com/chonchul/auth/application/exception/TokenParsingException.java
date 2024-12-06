@@ -1,6 +1,5 @@
-package com.chonchul.auth.token;
+package com.chonchul.auth.application.exception;
 
-import com.chonchul.auth.AuthErrorCode;
 import com.chonchul.common.exception.BusinessException;
 
 public class TokenParsingException extends BusinessException {

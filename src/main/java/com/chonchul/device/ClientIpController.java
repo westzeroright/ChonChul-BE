@@ -26,7 +26,7 @@ public class ClientIpController {
     }
 
     public boolean checkAttendance(HttpServletRequest request) {
-        String clientIp = getClientIp(request);
+        String clientIp = getClientIps(request);
         String macAddress = getMacAddress(clientIp);
 
         if (macAddress != null) {
@@ -39,9 +39,17 @@ public class ClientIpController {
         }
     }
 
+    public String getClientIps(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
+    }
+
     public String getMacAddress(String ipAddress) {
         try {
-            Process process = Runtime.getRuntime().exec("arp -a");
+            Process process = Runtime.getRuntime().exec("arp-scan --localnet");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line;

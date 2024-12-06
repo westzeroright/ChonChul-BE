@@ -1,6 +1,6 @@
 package com.chonchul.qr;
 
-import com.chonchul.auth.token.TokenProvider;
+import com.chonchul.auth.application.token.TokenProvider;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;

@@ -1,6 +1,6 @@
-package com.chonchul.auth;
+package com.chonchul.auth.presentation;
 
-import com.chonchul.auth.token.TokenResolver;
+import com.chonchul.auth.application.token.TokenResolver;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;

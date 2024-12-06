@@ -1,4 +1,4 @@
-package com.chonchul.auth.dto;
+package com.chonchul.auth.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.chonchul.email;
+package com.chonchul.auth.application.service;
 
 public enum EmailStatus {
     PENDING("인증 대기중"),

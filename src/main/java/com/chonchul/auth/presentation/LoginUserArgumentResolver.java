@@ -1,6 +1,6 @@
-package com.chonchul.auth;
+package com.chonchul.auth.presentation;
 
-import com.chonchul.auth.token.TokenResolver;
+import com.chonchul.auth.application.token.TokenResolver;
 import com.chonchul.user.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

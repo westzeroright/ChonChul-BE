@@ -1,5 +1,6 @@
-package com.chonchul.auth.token;
+package com.chonchul.auth.application.token;
 
+import com.chonchul.auth.application.exception.TokenParsingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.Keys;

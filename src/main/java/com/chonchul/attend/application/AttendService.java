@@ -3,7 +3,7 @@ package com.chonchul.attend.application;
 import com.chonchul.attend.persistence.AttendRepository;
 import com.chonchul.attend.persistence.entity.Attend;
 import com.chonchul.attend.persistence.entity.Status;
-import com.chonchul.auth.token.TokenResolver;
+import com.chonchul.auth.application.token.TokenResolver;
 import com.chonchul.lecture.application.exception.NotFoundSession;
 import com.chonchul.lecture.persistence.entity.Session;
 import com.chonchul.lecture.persistence.repository.SessionRepository;

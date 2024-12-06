@@ -1,8 +1,6 @@
-package com.chonchul.auth;
+package com.chonchul.auth.application.service;
 
-import com.chonchul.auth.token.AuthTokenDto;
-import com.chonchul.auth.token.AuthTokenService;
-import com.chonchul.email.EmailService;
+import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
 import com.chonchul.user.persistence.entity.Student;

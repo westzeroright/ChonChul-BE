@@ -1,13 +1,12 @@
 package com.chonchul.config;
 
-import com.chonchul.auth.JwtInterceptor;
-import com.chonchul.auth.LoginUserArgumentResolver;
+import com.chonchul.auth.presentation.JwtInterceptor;
+import com.chonchul.auth.presentation.LoginUserArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration

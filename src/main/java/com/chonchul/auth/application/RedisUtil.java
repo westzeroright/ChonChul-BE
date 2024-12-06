@@ -1,5 +1,6 @@
-package com.chonchul.email;
+package com.chonchul.auth.application;
 
+import com.chonchul.auth.application.service.EmailStatus;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;

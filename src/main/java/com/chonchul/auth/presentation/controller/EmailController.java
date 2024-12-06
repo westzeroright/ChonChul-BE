@@ -1,11 +1,18 @@
-package com.chonchul.email;
+package com.chonchul.auth.presentation.controller;
 
+import com.chonchul.auth.application.exception.EmailCodeExpireException;
+import com.chonchul.auth.application.service.EmailService;
+import com.chonchul.common.response.ResponseEntityGenerator;
+import com.chonchul.common.response.SuccessBody;
+import com.chonchul.auth.application.dto.EmailSendDto;
+import com.chonchul.auth.application.dto.EmailVerifyDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,22 +27,22 @@ public class EmailController {
 
     @Operation(summary = "메일 전송", description = "메일로 인증코드를 전송합니다.")
     @PostMapping("/send")
-    public String senEmail(@RequestParam String email) {
-        emailService.isValidEmail(email);
-        int code = emailService.sendMail(email);
+    public ResponseEntity<SuccessBody<String>> senEmail(@RequestBody EmailSendDto email) {
+        emailService.isValidEmail(email.email());
+        int code = emailService.sendMail(email.email());
         String numberCode = "" + code;
-        return numberCode;
+        return ResponseEntityGenerator.success(numberCode, "회원 조회 성공", HttpStatus.OK);
     }
 
     @Operation(summary = "인증코드 검사", description = "인증코드가 유효한지 검사합니다.")
     @PostMapping("/verify")
-    public String verifyCode(@RequestBody EmailReqDto emailReqDto) {
+    public ResponseEntity<SuccessBody<Void>> verifyCode(@RequestBody EmailVerifyDto emailReqDto) {
         Boolean checked = emailService.checkAuthCode(emailReqDto.email(), emailReqDto.code());
         if(checked){
-            return "ok";
+            return ResponseEntityGenerator.success(null, "메일 인증 성공", HttpStatus.OK);
         }
         else{
-            throw new NullPointerException("만료기간 지났을수도");
+            throw new EmailCodeExpireException();
         }
     }
 }

@@ -1,5 +1,7 @@
-package com.chonchul.auth.token;
+package com.chonchul.auth.application.service;
 
+import com.chonchul.auth.application.dto.AuthTokenDto;
+import com.chonchul.auth.application.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

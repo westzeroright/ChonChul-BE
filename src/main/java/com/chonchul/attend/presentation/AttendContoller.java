@@ -1,7 +1,7 @@
 package com.chonchul.attend.presentation;
 
 import com.chonchul.attend.application.AttendService;
-import com.chonchul.auth.LoginUser;
+import com.chonchul.auth.presentation.LoginUser;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
 import com.chonchul.user.persistence.entity.User;

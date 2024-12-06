@@ -1,4 +1,4 @@
-package com.chonchul.auth.token;
+package com.chonchul.auth.application.token;
 
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;

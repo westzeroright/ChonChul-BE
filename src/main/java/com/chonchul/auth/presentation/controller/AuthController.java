@@ -1,8 +1,9 @@
-package com.chonchul.auth;
+package com.chonchul.auth.presentation.controller;
 
-import com.chonchul.auth.dto.LoginReqDto;
-import com.chonchul.auth.dto.SignUpReqDto;
-import com.chonchul.auth.token.AuthTokenDto;
+import com.chonchul.auth.application.dto.LoginReqDto;
+import com.chonchul.auth.application.dto.SignUpReqDto;
+import com.chonchul.auth.application.service.AuthService;
+import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
 import io.swagger.v3.oas.annotations.Operation;

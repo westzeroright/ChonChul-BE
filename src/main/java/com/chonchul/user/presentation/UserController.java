@@ -1,6 +1,6 @@
 package com.chonchul.user.presentation;
 
-import com.chonchul.auth.LoginUser;
+import com.chonchul.auth.presentation.LoginUser;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
 import com.chonchul.user.application.dto.UserInfoDto;

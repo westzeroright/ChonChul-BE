@@ -1,5 +1,6 @@
-package com.chonchul.email;
+package com.chonchul.auth.application.service;
 
+import com.chonchul.auth.application.RedisUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class EmailService {
         MimeMessage message = createForm(email);
         javaMailSender.send(message);
         redisUtil.setDataExpire(Integer.toString(code),email,60*1L);
-        redisUtil.setData(email,EmailStatus.PENDING);
+        redisUtil.setData(email, EmailStatus.PENDING);
         return code;
     }
 

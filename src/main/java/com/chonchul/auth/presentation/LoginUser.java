@@ -1,4 +1,4 @@
-package com.chonchul.auth;
+package com.chonchul.auth.presentation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
