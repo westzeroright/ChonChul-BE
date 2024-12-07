@@ -76,5 +76,4 @@ public class ClientIpController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("출석 확인 실패: 네트워크에 연결되지 않았습니다.");
         }
     }
-
 }

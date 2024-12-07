@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentLectureRepository extends JpaRepository<StudentLecture, Long> {
-//    List<Long> findLectureIdByStudentId(Long studentId);
     @Query("SELECT sl.lecture.id FROM StudentLecture sl WHERE sl.student.id = :studentId")
     List<Long> findLectureIdByStudentId(@Param("studentId") Long studentId);
 }

@@ -9,7 +9,7 @@ public class ResponseEntityGenerator {
                 new SuccessBody<>(data, message), status);
     }
 
-    public static <D> ResponseEntity<SuccessBody<D>> success(D data, ApiResponseCode responseCode){
+    public static <D> ResponseEntity<SuccessBody<D>> success(D data, ApiResponseCode responseCode) {
         return success(data, responseCode.getMessage(), responseCode.getHttpStatus());
     }
 
@@ -17,7 +17,7 @@ public class ResponseEntityGenerator {
         return success(null, message, status);
     }
 
-    public static ResponseEntity<SuccessBody<Void>> success(ApiResponseCode responseCode){
+    public static ResponseEntity<SuccessBody<Void>> success(ApiResponseCode responseCode) {
         return success(responseCode.getMessage(), responseCode.getHttpStatus());
     }
 
@@ -28,6 +28,6 @@ public class ResponseEntityGenerator {
     }
 
     public static ResponseEntity<FailureBody> fail(String message, HttpStatus status) {
-        return fail(null,message,status);
+        return fail(null, message, status);
     }
 }

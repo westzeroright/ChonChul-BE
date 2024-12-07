@@ -13,20 +13,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final AuthTokenService authTokenService;
 
     public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email, String password) {
-        User user = createStudent(name,number,department,phoneNumber,email, password);
+        User user = createStudent(name, number, department, phoneNumber, email, password);
         return authTokenService.createAuthToken(user.getId());
     }
 
     public AuthTokenDto login(String email, String password) {
         User existUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundUserException());
-        boolean checkPassword = authenticateUser(password,existUser.getPassword());
+        boolean checkPassword = authenticateUser(password, existUser.getPassword());
         if (!checkPassword) {
             throw new InvalidLoginException();
         }

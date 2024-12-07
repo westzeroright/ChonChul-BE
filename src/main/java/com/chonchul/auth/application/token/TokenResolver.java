@@ -3,12 +3,12 @@ package com.chonchul.auth.application.token;
 import com.chonchul.auth.application.exception.TokenParsingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.Jwts;
 
 @Component
 public class TokenResolver {
@@ -53,7 +53,7 @@ public class TokenResolver {
     }
 
     public Long getLectureDataByQrToken(final String token) {
-        return getClaimValue(getQrClaims(token),LECTURE_ID_CLAIM_KEY);
+        return getClaimValue(getQrClaims(token), LECTURE_ID_CLAIM_KEY);
     }
 
     private Claims parseClaims(final String token, final SecretKey secretKey) {

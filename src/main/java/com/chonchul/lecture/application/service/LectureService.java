@@ -2,9 +2,9 @@ package com.chonchul.lecture.application.service;
 
 import com.chonchul.lecture.application.dto.LectureInfoDto;
 import com.chonchul.lecture.application.exception.NotFoundLecture;
+import com.chonchul.lecture.persistence.entity.Lecture;
 import com.chonchul.lecture.persistence.repository.LectureRepository;
 import com.chonchul.lecture.persistence.repository.StudentLectureRepository;
-import com.chonchul.lecture.persistence.entity.Lecture;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;

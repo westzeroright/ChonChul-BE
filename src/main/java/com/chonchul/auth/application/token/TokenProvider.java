@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenProvider {
     private static final String USER_ID_CLAIM_KEY = "userId";
+    private static final String LECTURE_ID_CLAIM_KEY = "lectureId";
     private final SecretKey accessSecretKey;
     private final SecretKey refreshSecretKey;
     private final Long accessTokenExpireTime;
     private final Long refreshTokenExpireTime;
-
-    private static final String LECTURE_ID_CLAIM_KEY = "lectureId";
     private final SecretKey qrSecretKey;
     private final Long qrTokenExpireTime;
 

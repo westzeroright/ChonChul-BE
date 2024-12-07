@@ -35,7 +35,7 @@ public class AttendContoller {
     @Operation(summary = "수강자 지각 처리", description = "강의자가 수강자를 지각 처리합니다.")
     @PostMapping("/teacher")
     public ResponseEntity<SuccessBody<Void>> late(@LoginUser User user, @RequestParam Long studentId, @RequestParam Long sessionId) {
-        attendService.late(studentId,sessionId);
+        attendService.late(studentId, sessionId);
         return ResponseEntityGenerator.success(null, "지각 처리 성공", HttpStatus.OK);
     }
 }

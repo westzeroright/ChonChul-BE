@@ -1,11 +1,11 @@
 package com.chonchul.auth.presentation.controller;
 
+import com.chonchul.auth.application.dto.EmailSendDto;
+import com.chonchul.auth.application.dto.EmailVerifyDto;
 import com.chonchul.auth.application.exception.EmailCodeExpireException;
 import com.chonchul.auth.application.service.EmailService;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
-import com.chonchul.auth.application.dto.EmailSendDto;
-import com.chonchul.auth.application.dto.EmailVerifyDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -38,10 +38,9 @@ public class EmailController {
     @PostMapping("/verify")
     public ResponseEntity<SuccessBody<Void>> verifyCode(@RequestBody EmailVerifyDto emailReqDto) {
         Boolean checked = emailService.checkAuthCode(emailReqDto.email(), emailReqDto.code());
-        if(checked){
+        if (checked) {
             return ResponseEntityGenerator.success(null, "메일 인증 성공", HttpStatus.OK);
-        }
-        else{
+        } else {
             throw new EmailCodeExpireException();
         }
     }

@@ -12,23 +12,23 @@ import org.springframework.stereotype.Service;
 public class RedisUtil {
     private final StringRedisTemplate redisTemplate;
 
-    public String getData(String key){
-        ValueOperations<String,String> valueOperations=redisTemplate.opsForValue();
+    public String getData(String key) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         return valueOperations.get(key);
     }
 
-    public void setData(String key, EmailStatus emailStatus){
-        ValueOperations<String,String> valueOperations=redisTemplate.opsForValue();
-        valueOperations.set(key,emailStatus.toString());
+    public void setData(String key, EmailStatus emailStatus) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(key, emailStatus.toString());
     }
 
-    public void setDataExpire(String key,String value,long duration){
-        ValueOperations<String,String> valueOperations=redisTemplate.opsForValue();
-        Duration expireDuration=Duration.ofSeconds(duration);
-        valueOperations.set(key,value,expireDuration);
+    public void setDataExpire(String key, String value, long duration) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        Duration expireDuration = Duration.ofSeconds(duration);
+        valueOperations.set(key, value, expireDuration);
     }
 
-    public void deleteData(String key){//지정된 키(key)에 해당하는 데이터를 Redis에서 삭제하는 메서드
+    public void deleteData(String key) {
         redisTemplate.delete(key);
     }
 }

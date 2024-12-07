@@ -43,7 +43,7 @@ public class LectureController {
     @Operation(summary = "강의 상세정보 조회", description = "강의의 상세정보를 조회합니다.")
     @GetMapping("/infos/{lectureId}")
     public ResponseEntity<SuccessBody<LectureInfoDto>> getLectureInfo(@PathVariable Long lectureId) {
-        LectureInfoDto lectureInfoDto =  lectureService.getLectureInfo(lectureId);
+        LectureInfoDto lectureInfoDto = lectureService.getLectureInfo(lectureId);
         return ResponseEntityGenerator.success(lectureInfoDto, "수업 상세정보 조회 성공", HttpStatus.OK);
     }
 
@@ -51,6 +51,6 @@ public class LectureController {
     @GetMapping("/sessions")
     public ResponseEntity<SuccessBody<SessionInfoDto>> getLectureSession(@RequestParam LocalDate localDate, @RequestParam Long lectureId) {
         SessionInfoDto sessionInfoDto = sessionService.getLectureSession(localDate, lectureId);
-        return ResponseEntityGenerator.success(sessionInfoDto,"강의주차 조회 성공", HttpStatus.OK);
+        return ResponseEntityGenerator.success(sessionInfoDto, "강의주차 조회 성공", HttpStatus.OK);
     }
 }

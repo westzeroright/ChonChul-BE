@@ -41,6 +41,15 @@ public class User extends BaseEntity {
     protected User() {
     }
 
+    protected User(String name, int number, String department, String phoneNumber, String email, String password) {
+        this.name = name;
+        this.number = number;
+        this.department = department;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }
@@ -75,14 +84,5 @@ public class User extends BaseEntity {
         this.department = department;
         this.phoneNumber = phoneNumber;
         this.email = email;
-    }
-
-    protected User(String name, int number, String department, String phoneNumber, String email, String password) {
-        this.name = name;
-        this.number = number;
-        this.department = department;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
     }
 }

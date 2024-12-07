@@ -16,8 +16,8 @@ public class SessionService {
     }
 
     public SessionInfoDto getLectureSession(LocalDate localDate, Long lectureId) {
-        Session session = sessionRepository.findByLectureIdAndDate(lectureId,localDate)
-                .orElseThrow(()->new NotFoundSession());
+        Session session = sessionRepository.findByLectureIdAndDate(lectureId, localDate)
+                .orElseThrow(() -> new NotFoundSession());
 
         return new SessionInfoDto(
                 session.getWeek(),

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public final class FailureBody extends ApiResponseBody{
+public final class FailureBody extends ApiResponseBody {
     private final String errorCode;
     private final String message;
 }

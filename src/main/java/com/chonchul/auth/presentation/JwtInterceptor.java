@@ -18,6 +18,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class JwtInterceptor implements HandlerInterceptor {
     private final TokenResolver tokenResolver;
 
+    private static void logRequestDetails(HttpServletRequest request) {
+        String clientIp = request.getHeader("X-Forwarded-For");
+        if (clientIp == null || clientIp.isEmpty()) {
+            clientIp = request.getRemoteAddr();
+        }
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -46,13 +53,6 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new NotFoundUserException();
         }
         return false;
-    }
-
-    private static void logRequestDetails(HttpServletRequest request) {
-        String clientIp = request.getHeader("X-Forwarded-For");
-        if (clientIp == null || clientIp.isEmpty()) {
-            clientIp = request.getRemoteAddr();
-        }
     }
 
     private boolean vaildToken(String token) {

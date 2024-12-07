@@ -6,5 +6,7 @@ public enum EmailStatus {
 
     private String code;
 
-    EmailStatus(String code) {this.code = code;}
+    EmailStatus(String code) {
+        this.code = code;
+    }
 }

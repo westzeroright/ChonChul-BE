@@ -25,19 +25,19 @@ public class AttendService {
     public void attend(Long studentId, String qrToken) {
         Long sessionId = tokenResolver.getLectureDataByQrToken(qrToken);
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(()-> new NotFoundUserException());
+                .orElseThrow(() -> new NotFoundUserException());
         Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(()-> new NotFoundSession());
-        Attend attend = new Attend(LocalDateTime.now(), Status.ATTEND,session,student);
+                .orElseThrow(() -> new NotFoundSession());
+        Attend attend = new Attend(LocalDateTime.now(), Status.ATTEND, session, student);
         attendRepository.saveAndFlush(attend);
     }
 
     public void late(Long studentId, Long sessionId) {
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(()-> new NotFoundUserException());
+                .orElseThrow(() -> new NotFoundUserException());
         Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(()-> new NotFoundSession());
-        Attend attend = new Attend(LocalDateTime.now(), Status.LATE,session,student);
+                .orElseThrow(() -> new NotFoundSession());
+        Attend attend = new Attend(LocalDateTime.now(), Status.LATE, session, student);
         attendRepository.saveAndFlush(attend);
     }
 }
