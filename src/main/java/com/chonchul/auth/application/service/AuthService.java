@@ -39,7 +39,7 @@ public class AuthService {
 
     public User createUser(String name, int number, String department, String phoneNumber, String email,
                            String password) {
-        User user = new User(name, number, department, phoneNumber, email, password);
+        User user = new User(name, number, department, phoneNumber, email, hashPassword(password));
         userRepository.saveAndFlush(user);
         return user;
     }

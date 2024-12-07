@@ -48,6 +48,7 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        grantRole(number);
     }
 
     public Long getId() {
@@ -78,11 +79,12 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public void update(String name, int number, String department, String phoneNumber, String email) {
-        this.name = name;
-        this.number = number;
-        this.department = department;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+    public void grantRole(int number) {
+        if (String.valueOf(number).length() == 6) {
+            this.role = Role.STUDENT;
+        }
+        if (String.valueOf(number).length() != 6) {
+            this.role = Role.TEACHER;
+        }
     }
 }
