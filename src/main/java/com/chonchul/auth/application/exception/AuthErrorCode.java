@@ -4,9 +4,12 @@ import com.chonchul.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public enum AuthErrorCode implements ErrorCode {
-    TOKEN_PARSE_FAIL("40001", HttpStatus.BAD_REQUEST, "토큰 검증 시 문제가 생겼습니다."),
+    TOKEN_PARSE_FAIL("40001", HttpStatus.UNAUTHORIZED, "토큰 검증 시 문제가 생겼습니다."),
     EMAIL_CODE_EXPIRE("4002", HttpStatus.BAD_REQUEST, "메일 인증 코드가 만료되었습니다."),
-    INVALID_LOGIN_PASSWORD("4003", HttpStatus.BAD_REQUEST, "로그인을 다시 수행하십시오.");
+    INVALID_LOGIN_PASSWORD("4003", HttpStatus.BAD_REQUEST, "로그인을 다시 수행하십시오."),
+    INVALID_SCHOOL_MAIL("4004", HttpStatus.BAD_REQUEST, "학교 메일을 사용해주십시오."),
+    NOT_VERIFIED_MAIL("4005", HttpStatus.BAD_REQUEST, "메일 인증이 완료되지 않았습니다.");
+
     private final String code;
     private final HttpStatus httpStatus;
     private final String message;

@@ -2,9 +2,9 @@ package com.chonchul.auth.application.service;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.auth.application.exception.InvalidLoginException;
+import com.chonchul.auth.application.exception.NotVerifiedMailException;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
-import com.chonchul.user.persistence.entity.Student;
 import com.chonchul.user.persistence.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
@@ -17,9 +17,13 @@ public class AuthService {
     private final EmailService emailService;
     private final AuthTokenService authTokenService;
 
-    public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email, String password) {
-        User user = createStudent(name, number, department, phoneNumber, email, password);
-        return authTokenService.createAuthToken(user.getId());
+    public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email,
+                               String password) {
+        if (!emailService.isVerified(email)) {
+            throw new NotVerifiedMailException();
+        }
+        User newUser = createUser(name, number, department, phoneNumber, email, password);
+        return authTokenService.createAuthToken(newUser.getId());
     }
 
     public AuthTokenDto login(String email, String password) {
@@ -33,15 +37,11 @@ public class AuthService {
         return authTokenService.createAuthToken(existUser.getId());
     }
 
-    public User createStudent(String name, int number, String department, String phoneNumber, String email, String password) {
-        if (!emailService.isVerified(email)) {
-            String hashedPassword = hashPassword(password);
-            Student student = new Student(name, number, department, phoneNumber, email, hashedPassword);
-            User user = (User) student;
-            userRepository.saveAndFlush(user);
-            return user;
-        }
-        return null;
+    public User createUser(String name, int number, String department, String phoneNumber, String email,
+                           String password) {
+        User user = new User(name, number, department, phoneNumber, email, password);
+        userRepository.saveAndFlush(user);
+        return user;
     }
 
     public AuthTokenDto reissue(String refreshToken) {

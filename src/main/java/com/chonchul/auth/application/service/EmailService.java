@@ -1,6 +1,7 @@
 package com.chonchul.auth.application.service;
 
 import com.chonchul.auth.application.RedisUtil;
+import com.chonchul.auth.application.exception.InvalidMailException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class EmailService {
     private static int code;
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
+    public static final Long emailCodeExpireTime = 60 * 1L;
 
     public static void createCode() {
         code = (int) (Math.random() * (90000)) + 100000;
@@ -44,7 +46,7 @@ public class EmailService {
     public int sendMail(String email) {
         MimeMessage message = createForm(email);
         javaMailSender.send(message);
-        redisUtil.setDataExpire(Integer.toString(code), email, 60 * 1L);
+        redisUtil.setDataExpire(Integer.toString(code), email, emailCodeExpireTime);
         redisUtil.setData(email, EmailStatus.PENDING);
         return code;
     }
@@ -69,7 +71,7 @@ public class EmailService {
         String regex = "^[a-zA-Z0-9._%+-]+@jnu\\.ac\\.kr$";
         boolean isValid = email.matches(regex);
         if (!isValid) {
-            throw new RuntimeException();
+            throw new InvalidMailException();
         }
         return true;
     }
