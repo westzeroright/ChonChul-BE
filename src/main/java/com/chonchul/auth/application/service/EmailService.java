@@ -4,20 +4,21 @@ import com.chonchul.auth.application.RedisUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private static final String senderEmail = "westzeroright@gmail.com";
+    @Value("${email.sender}")
+    private String senderEmail;
     private static int code;
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
 
-
     public static void createCode() {
-        code = (int) (Math.random() * (90000)) + 100000;// (int) Math.random() * (최댓값-최소값+1) + 최소값
+        code = (int) (Math.random() * (90000)) + 100000;
     }
 
     public MimeMessage createForm(String email) {
