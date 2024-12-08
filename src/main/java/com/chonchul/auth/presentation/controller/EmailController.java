@@ -30,7 +30,7 @@ public class EmailController {
     public ResponseEntity<SuccessBody<Void>> senEmail(@RequestBody EmailReqDto email) {
         emailService.isValidEmail(email.email());
         emailService.sendMail(email.email());
-        return ResponseEntityGenerator.success(null, "회원 조회 성공", HttpStatus.OK);
+        return ResponseEntityGenerator.success(null, "메일 전송 성공", HttpStatus.OK);
     }
 
     @Operation(summary = "인증코드 검사", description = "인증코드가 유효한지 검사합니다.")

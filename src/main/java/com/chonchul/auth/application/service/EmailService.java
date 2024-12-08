@@ -85,12 +85,12 @@ public class EmailService {
         MimeMessage message = createForm(email);
         javaMailSender.send(message);
         redisUtil.setDataExpire(Integer.toString(code), email, emailCodeExpireTime);
-        redisUtil.setData(email, EmailStatus.PENDING);
+        redisUtil.setData(email, EmailStatus.PENDING.name());
         return code;
     }
 
     public String sendPassword(String email) {
-        MimeMessage message = createForm(email);
+        MimeMessage message = createFormPassword(email);
         javaMailSender.send(message);
         return temporaryPassword;
     }
@@ -99,7 +99,7 @@ public class EmailService {
         if (redisUtil.getData(code) == null) {
             return false;
         } else if (redisUtil.getData(code).equals(email)) {
-            redisUtil.setData(email, EmailStatus.VERIFIED);
+            redisUtil.setData(email, EmailStatus.VERIFIED.name());
             return true;
         } else {
             return false;
@@ -108,7 +108,7 @@ public class EmailService {
 
     public boolean isVerified(String email) {
         Object status = redisUtil.getData(email);
-        return EmailStatus.VERIFIED.equals(status);
+        return EmailStatus.VERIFIED.name().equals(status);
     }
 
     public boolean isValidEmail(String email) {

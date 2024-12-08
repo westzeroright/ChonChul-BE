@@ -22,7 +22,7 @@ public class AuthService {
 
     public AuthTokenDto signup(String name, int number, String department, String phoneNumber, String email,
                                String password) {
-        if (!emailService.isVerified(email)) {
+        if (!(emailService.isVerified(email))) {
             throw new NotVerifiedMailException();
         }
         User newUser = createUser(name, number, department, phoneNumber, email, password);
