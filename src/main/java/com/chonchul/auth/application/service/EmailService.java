@@ -4,11 +4,14 @@ import com.chonchul.auth.application.RedisUtil;
 import com.chonchul.auth.application.exception.InvalidMailException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
@@ -18,9 +21,22 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
     public static final Long emailCodeExpireTime = 60 * 1L;
+    private static String temporaryPassword;
 
     public static void createCode() {
         code = (int) (Math.random() * (90000)) + 100000;
+    }
+
+    public static void generateTemporaryPassword() {
+        String charactoer = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        for (int i = 0; i<6;i++) {
+            int index = random.nextInt(charactoer.length());
+            sb.append(charactoer.charAt(index));
+        }
+        temporaryPassword = sb.toString();
     }
 
     public MimeMessage createForm(String email) {
@@ -40,6 +56,28 @@ public class EmailService {
             e.printStackTrace();
         }
 
+        log.info("인증번호: " + code);
+        return message;
+    }
+
+    public MimeMessage createFormPassword(String email) {
+        generateTemporaryPassword();
+        MimeMessage message = javaMailSender.createMimeMessage();
+
+        try {
+            message.setFrom(senderEmail);
+            message.setRecipients(MimeMessage.RecipientType.TO, email);
+            message.setSubject("임시 비밀번호 발급");
+            String body = "";
+            body += "<h3>" + "임시 비밀번호입니다." + "</h3>";
+            body += "<h1>" + temporaryPassword + "</h1>";
+            body += "<h3>" + "감사합니다." + "</h3>";
+            message.setText(body, "UTF-8", "html");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        log.info("임시 비밀번호: " + code);
         return message;
     }
 
@@ -49,6 +87,12 @@ public class EmailService {
         redisUtil.setDataExpire(Integer.toString(code), email, emailCodeExpireTime);
         redisUtil.setData(email, EmailStatus.PENDING);
         return code;
+    }
+
+    public String sendPassword(String email) {
+        MimeMessage message = createForm(email);
+        javaMailSender.send(message);
+        return temporaryPassword;
     }
 
     public boolean checkAuthCode(String email, String code) {

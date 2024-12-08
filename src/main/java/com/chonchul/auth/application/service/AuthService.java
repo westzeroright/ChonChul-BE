@@ -60,39 +60,36 @@ public class AuthService {
     }
 
     public String findEmail(String name, String phoneNumber) {
-        User user = userRepository.findByNameAndPhoneNumber(name,phoneNumber)
-                .orElseThrow(()->new NotFoundUserException());
+        User user = userRepository.findByNameAndPhoneNumber(name, phoneNumber)
+                .orElseThrow(() -> new NotFoundUserException());
         return user.getEmail();
     }
 
     public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword) {
         User user = userRepository.findById(userId)
-                .orElseThrow(()-> new NotFoundUserException());
-        checkCurrentPassword(user.getPassword(),currentPassword);
-        checkNewPassword(newPassword,confirmPassword);
+                .orElseThrow(() -> new NotFoundUserException());
+        checkCurrentPassword(user.getPassword(), currentPassword);
+        checkNewPassword(newPassword, confirmPassword);
         user.setPassword(hashPassword(newPassword));
         userRepository.saveAndFlush(user);
     }
 
-    public void checkCurrentPassword(String password,String currentPassword) {
-        if (!authenticateUser(currentPassword,password)) {
+    public void checkCurrentPassword(String password, String currentPassword) {
+        if (!authenticateUser(currentPassword, password)) {
             throw new NotMatchCurrentPwException();
         }
     }
 
     public void checkNewPassword(String newPassword, String confirmPassword) {
-        if(!newPassword.equals(confirmPassword)) {
+        if (!newPassword.equals(confirmPassword)) {
             throw new NotMatchNewPasswordException();
         }
     }
 
-    /*
-    학교 메일인지 검사하고, 메일 인증되었는지 검사하고
-     */
     public void changeEmail(Long userId, String email) {
         User user = userRepository.findById(userId)
-                        .orElseThrow(()-> new NotFoundUserException());
-        isEqualEmail(user.getEmail(),email);
+                .orElseThrow(() -> new NotFoundUserException());
+        isEqualEmail(user.getEmail(), email);
         emailService.checkEmail(email);
         user.setEmail(email);
         userRepository.saveAndFlush(user);
@@ -102,5 +99,13 @@ public class AuthService {
         if (!(userEmail.equals(email))) {
             throw new NotMatchEmailException();
         }
+    }
+
+    public void issuePassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotMatchEmailException());
+        String temporaryPassword = emailService.sendPassword(email);
+        user.setPassword(temporaryPassword);
+        userRepository.saveAndFlush(user);
     }
 }

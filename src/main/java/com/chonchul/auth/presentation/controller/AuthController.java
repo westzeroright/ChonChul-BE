@@ -73,4 +73,10 @@ public class AuthController {
         authService.changeEmail(user.getId(),emailReqDto.email());
         return ResponseEntityGenerator.success(null,"이메일 변경 성공", HttpStatus.OK);
     }
+
+    @PostMapping("/password")
+    public ResponseEntity<SuccessBody<Void>> sendPassword(@RequestBody EmailReqDto email) {
+        authService.issuePassword(email.email());
+        return ResponseEntityGenerator.success(null,"임시비밀번호 발급 성공", HttpStatus.OK);
+    }
 }
