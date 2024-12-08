@@ -79,6 +79,10 @@ public class User extends BaseEntity {
         return password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public void grantRole(int number) {
         if (String.valueOf(number).length() == 6) {
             this.role = Role.STUDENT;
