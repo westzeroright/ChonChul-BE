@@ -108,6 +108,9 @@ public class EmailService {
 
     public boolean isVerified(String email) {
         Object status = redisUtil.getData(email);
+        if (status == null) {
+            return false;
+        }
         return EmailStatus.VERIFIED.name().equals(status);
     }
 
