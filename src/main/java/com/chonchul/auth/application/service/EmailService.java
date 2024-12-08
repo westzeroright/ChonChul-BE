@@ -75,4 +75,10 @@ public class EmailService {
         }
         return true;
     }
+
+    public void checkEmail(String email) {
+        if (!(isValidEmail(email) && isVerified(email))) {
+
+        }
+    }
 }

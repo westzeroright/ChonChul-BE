@@ -3,6 +3,7 @@ package com.chonchul.auth.application.service;
 import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.auth.application.exception.InvalidLoginException;
 import com.chonchul.auth.application.exception.NotMatchCurrentPwException;
+import com.chonchul.auth.application.exception.NotMatchEmailException;
 import com.chonchul.auth.application.exception.NotMatchNewPasswordException;
 import com.chonchul.auth.application.exception.NotVerifiedMailException;
 import com.chonchul.user.application.exception.NotFoundUserException;
@@ -82,6 +83,24 @@ public class AuthService {
     public void checkNewPassword(String newPassword, String confirmPassword) {
         if(!newPassword.equals(confirmPassword)) {
             throw new NotMatchNewPasswordException();
+        }
+    }
+
+    /*
+    학교 메일인지 검사하고, 메일 인증되었는지 검사하고
+     */
+    public void changeEmail(Long userId, String email) {
+        User user = userRepository.findById(userId)
+                        .orElseThrow(()-> new NotFoundUserException());
+        isEqualEmail(user.getEmail(),email);
+        emailService.checkEmail(email);
+        user.setEmail(email);
+        userRepository.saveAndFlush(user);
+    }
+
+    public void isEqualEmail(String userEmail, String email) {
+        if (!(userEmail.equals(email))) {
+            throw new NotMatchEmailException();
         }
     }
 }

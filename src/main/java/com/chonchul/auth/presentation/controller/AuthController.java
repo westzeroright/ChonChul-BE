@@ -3,6 +3,7 @@ package com.chonchul.auth.presentation.controller;
 import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.auth.application.dto.ChangePasswordDto;
 import com.chonchul.auth.application.dto.EmailFindDto;
+import com.chonchul.auth.application.dto.EmailReqDto;
 import com.chonchul.auth.application.dto.LoginReqDto;
 import com.chonchul.auth.application.dto.SignUpReqDto;
 import com.chonchul.auth.application.service.AuthService;
@@ -65,5 +66,11 @@ public class AuthController {
         authService.changePassword(user.getId(), changePasswordDto.currentPassword(), changePasswordDto.newPassword(),
                 changePasswordDto.confirmPassword());
         return ResponseEntityGenerator.success(null,"비밀번호 재설정 성공", HttpStatus.OK);
+    }
+
+    @PutMapping("/email")
+    public ResponseEntity<SuccessBody<Void>> changeEmail(@LoginUser User user, @RequestBody EmailReqDto emailReqDto) {
+        authService.changeEmail(user.getId(),emailReqDto.email());
+        return ResponseEntityGenerator.success(null,"이메일 변경 성공", HttpStatus.OK);
     }
 }

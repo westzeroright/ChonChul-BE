@@ -1,6 +1,6 @@
 package com.chonchul.auth.presentation.controller;
 
-import com.chonchul.auth.application.dto.EmailSendDto;
+import com.chonchul.auth.application.dto.EmailReqDto;
 import com.chonchul.auth.application.dto.EmailVerifyDto;
 import com.chonchul.auth.application.exception.EmailCodeExpireException;
 import com.chonchul.auth.application.service.EmailService;
@@ -27,7 +27,7 @@ public class EmailController {
 
     @Operation(summary = "메일 전송", description = "메일로 인증코드를 전송합니다.")
     @PostMapping("/send")
-    public ResponseEntity<SuccessBody<String>> senEmail(@RequestBody EmailSendDto email) {
+    public ResponseEntity<SuccessBody<String>> senEmail(@RequestBody EmailReqDto email) {
         emailService.isValidEmail(email.email());
         int code = emailService.sendMail(email.email());
         String numberCode = "" + code;
