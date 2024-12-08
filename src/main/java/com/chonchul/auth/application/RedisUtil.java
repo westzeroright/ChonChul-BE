@@ -17,7 +17,7 @@ public class RedisUtil {
         return valueOperations.get(key);
     }
 
-    public void setData(String key, EmailStatus emailStatus) {
+    public void setData(String key, String emailStatus) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key, emailStatus.toString());
     }

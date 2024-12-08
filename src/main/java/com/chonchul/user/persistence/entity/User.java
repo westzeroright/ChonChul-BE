@@ -41,14 +41,14 @@ public class User extends BaseEntity {
     protected User() {
     }
 
-    public User(String name, int number, String department, String phoneNumber, String email, String password) {
+    public User(String name, int number, String department, String phoneNumber, String email, String password, Role role) {
         this.name = name;
         this.number = number;
         this.department = department;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
-        grantRole(number);
+        this.role = role;
     }
 
     public Long getId() {
@@ -79,14 +79,18 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public void grantRole(int number) {
-        if (String.valueOf(number).length() == 6) {
-            this.role = Role.STUDENT;
-        }
-        if (String.valueOf(number).length() != 6) {
-            this.role = Role.TEACHER;
-        }
+    public Role getRole() {
+        return role;
     }
+
+//    public void grantRole(int number) {
+//        if (String.valueOf(number).length() == 6) {
+//            this.role = Role.STUDENT;
+//        }
+//        if (String.valueOf(number).length() != 6) {
+//            this.role = Role.TEACHER;
+//        }
+//    }
 
     public void setPassword(String password) {
         this.password = password;

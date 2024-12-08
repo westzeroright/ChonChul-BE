@@ -1,4 +1,4 @@
-package com.chonchul.device;
+package com.chonchul.attend.presentation.device;
 
 
 import jakarta.servlet.http.HttpServletRequest;
