@@ -11,7 +11,8 @@ public enum AuthErrorCode implements ErrorCode {
     NOT_VERIFIED_MAIL("4005", HttpStatus.BAD_REQUEST, "메일 인증이 완료되지 않았습니다."),
     NOT_MATCH_NEWPW("4006", HttpStatus.BAD_REQUEST, "새 비밀번호와 확인 비밀번호가 일치하지 않습니다."),
     NOT_MATCH_CURRENTPW("4007", HttpStatus.BAD_REQUEST, "현재 비밀번호가 일치하지 않습니다."),
-    NOT_MATCH_EMAIL("4008", HttpStatus.BAD_REQUEST,"현재 이메일 주소가 정확한지 확인해 주세요.");
+    NOT_MATCH_EMAIL("4008", HttpStatus.BAD_REQUEST,"현재 이메일 주소가 정확한지 확인해 주세요."),
+    ALREADY_EXIST_USER("4009", HttpStatus.BAD_REQUEST, "이미 가입된 계정이 존재합니다.");
 
     private final String code;
     private final HttpStatus httpStatus;

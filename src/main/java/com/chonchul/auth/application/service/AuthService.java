@@ -1,6 +1,7 @@
 package com.chonchul.auth.application.service;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
+import com.chonchul.auth.application.exception.AlreadyExistUserException;
 import com.chonchul.auth.application.exception.InvalidLoginException;
 import com.chonchul.auth.application.exception.NotMatchCurrentPwException;
 import com.chonchul.auth.application.exception.NotMatchEmailException;
@@ -25,8 +26,15 @@ public class AuthService {
         if (!(emailService.isVerified(email))) {
             throw new NotVerifiedMailException();
         }
+        isAlreadyExist(email);
         User newUser = createUser(name, number, department, phoneNumber, email, password);
         return authTokenService.createAuthToken(newUser.getId());
+    }
+
+    public void isAlreadyExist(String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new AlreadyExistUserException();
+        }
     }
 
     public AuthTokenDto login(String email, String password) {
