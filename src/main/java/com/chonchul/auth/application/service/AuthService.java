@@ -9,6 +9,9 @@ import com.chonchul.auth.application.exception.NotMatchNewPasswordException;
 import com.chonchul.auth.application.exception.NotVerifiedMailException;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
+import com.chonchul.user.persistence.entity.Role;
+import com.chonchul.user.persistence.entity.Student;
+import com.chonchul.user.persistence.entity.Teacher;
 import com.chonchul.user.persistence.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
@@ -50,8 +53,14 @@ public class AuthService {
 
     public User createUser(String name, int number, String department, String phoneNumber, String email,
                            String password) {
-        User user = new User(name, number, department, phoneNumber, email, hashPassword(password));
-        userRepository.saveAndFlush(user);
+        User user = null;
+        if (String.valueOf(number).length() == 6) {
+            user = new Student(name, number, department, phoneNumber, email, hashPassword(password), Role.STUDENT);
+        } else {
+            user = new Teacher(name, number, department, phoneNumber, email, hashPassword(password), Role.TEACHER);
+        }
+
+        userRepository.save(user);
         return user;
     }
 
