@@ -2,6 +2,8 @@ package com.chonchul.auth.application.service;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
 import com.chonchul.auth.application.exception.InvalidLoginException;
+import com.chonchul.auth.application.exception.NotMatchCurrentPwException;
+import com.chonchul.auth.application.exception.NotMatchNewPasswordException;
 import com.chonchul.auth.application.exception.NotVerifiedMailException;
 import com.chonchul.user.application.exception.NotFoundUserException;
 import com.chonchul.user.persistence.UserRepository;
@@ -60,5 +62,26 @@ public class AuthService {
         User user = userRepository.findByNameAndPhoneNumber(name,phoneNumber)
                 .orElseThrow(()->new NotFoundUserException());
         return user.getEmail();
+    }
+
+    public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new NotFoundUserException());
+        checkCurrentPassword(user.getPassword(),currentPassword);
+        checkNewPassword(newPassword,confirmPassword);
+        user.setPassword(hashPassword(newPassword));
+        userRepository.saveAndFlush(user);
+    }
+
+    public void checkCurrentPassword(String password,String currentPassword) {
+        if (!authenticateUser(currentPassword,password)) {
+            throw new NotMatchCurrentPwException();
+        }
+    }
+
+    public void checkNewPassword(String newPassword, String confirmPassword) {
+        if(!newPassword.equals(confirmPassword)) {
+            throw new NotMatchNewPasswordException();
+        }
     }
 }

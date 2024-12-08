@@ -1,12 +1,15 @@
 package com.chonchul.auth.presentation.controller;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
+import com.chonchul.auth.application.dto.ChangePasswordDto;
 import com.chonchul.auth.application.dto.EmailFindDto;
 import com.chonchul.auth.application.dto.LoginReqDto;
 import com.chonchul.auth.application.dto.SignUpReqDto;
 import com.chonchul.auth.application.service.AuthService;
+import com.chonchul.auth.presentation.LoginUser;
 import com.chonchul.common.response.ResponseEntityGenerator;
 import com.chonchul.common.response.SuccessBody;
+import com.chonchul.user.persistence.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,5 +60,10 @@ public class AuthController {
         return ResponseEntityGenerator.success(email,"이메일 찾기 성공", HttpStatus.OK);
     }
 
-
+    @PutMapping("/password")
+    public ResponseEntity<SuccessBody<Void>> changePassword(@LoginUser User user, @RequestBody ChangePasswordDto changePasswordDto) {
+        authService.changePassword(user.getId(), changePasswordDto.currentPassword(), changePasswordDto.newPassword(),
+                changePasswordDto.confirmPassword());
+        return ResponseEntityGenerator.success(null,"비밀번호 재설정 성공", HttpStatus.OK);
+    }
 }

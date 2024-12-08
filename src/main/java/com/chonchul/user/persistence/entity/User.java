@@ -87,4 +87,8 @@ public class User extends BaseEntity {
             this.role = Role.TEACHER;
         }
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
