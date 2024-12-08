@@ -16,6 +16,8 @@ public class Teacher extends User {
     @JoinColumn(name = "teacher_id")
     private List<Lecture> lectures = new ArrayList<>();
 
+    protected Teacher() {}
+
     public Teacher(String name, int number, String department, String phoneNumber, String email, String password, Role role) {
         super(name, number, department, phoneNumber, email, password, role);
     }
