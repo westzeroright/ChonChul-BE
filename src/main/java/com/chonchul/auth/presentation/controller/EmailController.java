@@ -27,11 +27,10 @@ public class EmailController {
 
     @Operation(summary = "메일 전송", description = "메일로 인증코드를 전송합니다.")
     @PostMapping("/send")
-    public ResponseEntity<SuccessBody<String>> senEmail(@RequestBody EmailReqDto email) {
+    public ResponseEntity<SuccessBody<Void>> senEmail(@RequestBody EmailReqDto email) {
         emailService.isValidEmail(email.email());
-        int code = emailService.sendMail(email.email());
-        String numberCode = "" + code;
-        return ResponseEntityGenerator.success(numberCode, "회원 조회 성공", HttpStatus.OK);
+        emailService.sendMail(email.email());
+        return ResponseEntityGenerator.success(null, "회원 조회 성공", HttpStatus.OK);
     }
 
     @Operation(summary = "인증코드 검사", description = "인증코드가 유효한지 검사합니다.")
