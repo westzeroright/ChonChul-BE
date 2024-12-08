@@ -49,12 +49,14 @@ public class AuthController {
         return ResponseEntityGenerator.success(authTokenDto, "회원 로그인 성공", HttpStatus.OK);
     }
 
+    @Operation(summary = "토큰 재발급", description = "access token이 만료되었으면 refresh token을 가지고 토큰을 재발급합니다.")
     @PostMapping("/reissue")
     public ResponseEntity<SuccessBody<AuthTokenDto>> reissue(@RequestHeader String refreshToken) {
         AuthTokenDto authTokenDto = authService.reissue(refreshToken);
         return ResponseEntityGenerator.success(authTokenDto, "토큰 재발급 성공", HttpStatus.OK);
     }
 
+    @Operation(summary = "이메일 찾기", description = "사용자의 이름과 전화번호를 가지고 이메일을 찾아줍니다.")
     @GetMapping("/email")
     public ResponseEntity<SuccessBody<String>> findEamil(@RequestBody EmailFindDto emailFindDto) {
         String email = authService.findEmail(emailFindDto.name(),emailFindDto.phoneNumber());
