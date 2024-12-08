@@ -1,4 +1,4 @@
-package com.chonchul.qr;
+package com.chonchul.attend.presentation.qr;
 
 import com.chonchul.auth.application.token.TokenProvider;
 import com.google.zxing.BarcodeFormat;
