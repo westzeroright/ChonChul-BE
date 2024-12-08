@@ -55,4 +55,10 @@ public class AuthService {
     public boolean authenticateUser(String inputPassword, String storedHashedPassword) {
         return BCrypt.checkpw(inputPassword, storedHashedPassword);
     }
+
+    public String findEmail(String name, String phoneNumber) {
+        User user = userRepository.findByNameAndPhoneNumber(name,phoneNumber)
+                .orElseThrow(()->new NotFoundUserException());
+        return user.getEmail();
+    }
 }

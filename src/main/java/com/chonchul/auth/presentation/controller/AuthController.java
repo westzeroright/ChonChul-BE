@@ -1,6 +1,7 @@
 package com.chonchul.auth.presentation.controller;
 
 import com.chonchul.auth.application.dto.AuthTokenDto;
+import com.chonchul.auth.application.dto.EmailFindDto;
 import com.chonchul.auth.application.dto.LoginReqDto;
 import com.chonchul.auth.application.dto.SignUpReqDto;
 import com.chonchul.auth.application.service.AuthService;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -47,4 +49,12 @@ public class AuthController {
         AuthTokenDto authTokenDto = authService.reissue(refreshToken);
         return ResponseEntityGenerator.success(authTokenDto, "토큰 재발급 성공", HttpStatus.OK);
     }
+
+    @GetMapping("/email")
+    public ResponseEntity<SuccessBody<String>> findEamil(@RequestBody EmailFindDto emailFindDto) {
+        String email = authService.findEmail(emailFindDto.name(),emailFindDto.phoneNumber());
+        return ResponseEntityGenerator.success(email,"이메일 찾기 성공", HttpStatus.OK);
+    }
+
+
 }
