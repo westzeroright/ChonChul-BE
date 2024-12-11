@@ -8,4 +8,4 @@
 | **Database**   | MySQL 8.0, Redis         |
 | **Infra**      | Amazon Web Service, Nginx|
 | **Mail System**    | SMTP              |
-| **Library**    | JWT, Bycrpt, Zxing            |
+| **Library**    | JWT, Bcrypt , Zxing            |
